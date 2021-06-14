@@ -1,0 +1,16 @@
+.single-card {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(23, 121, 23);
+  border-radius: 5px;
+  border: 1px solid rgb(177, 174, 174);
+  padding: 1rem;
+  color: white;
+  cursor: pointer;
+  transform: translateZ(0);
+  transition: transform 2.5 ease-out;
+}
+
+.single-card:hover {
+  transform: scale(1.05);
+}

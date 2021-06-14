@@ -1,25 +1,50 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { CardList } from './components/card-components/card-list.jsx';
+import { Footer } from './components/footer-components/footer.jsx';
+import { SearchFilter } from './components/searchFilter/search-filter-component.jsx';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+constructor () {
+  super();
+  this.state = {
+    products: [],
+    footerInfo: { 
+      title:'social media',
+      social: 'Aniel cards research'
+    },
+    searchFilter: ''
+  }; 
+}
+
+// component from livecircle methods
+componentDidMount() {
+  fetch('https://jsonplaceholder.typicode.com/users')
+            .then(res => res.json())
+            .then(users => this.setState({ products: users}))
+}
+
+handle = e => {
+  this.setState({ searchFilter: e.target.value })
+};
+
+
+  render () {
+    const { products, searchFilter} = this.state;
+    const filteredElements = products.filter(product => 
+      product.name.toLowerCase().includes(searchFilter.toLowerCase())
+      );
+
+    return (
+      <div className="App">
+        <h1 className="firstH1">Monsters Cards</h1>
+        <SearchFilter placeholder='search' handle={this.handle} />            
+        <CardList products={filteredElements} /> 
+        <Footer footerInfo={ this.state.footerInfo.social } />
+      </div>
+    );
+  }
 }
 
 export default App;
